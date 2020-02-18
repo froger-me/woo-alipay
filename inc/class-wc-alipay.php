@@ -252,19 +252,17 @@ class WC_Alipay extends WC_Payment_Gateway {
 
 		Woo_Alipay::require_lib( $this->is_mobile() ? 'payment_mobile' : 'payment_computer' );
 
-		// $result = $this->order_hold( $order );
-
 		if ( $result instanceof WP_Error ) {
 			self::log( __METHOD__ . ' Order #' . $order_id . ': ' . wc_print_r( $result ) );
 		}
 
 		$exchange_rate = floatval( $this->get_option( 'exchange_rate' ) );
 
-		if ( 0 >= $exchange_rate ) {
+		if ( 0 >= $exchange_rate || ! $exchange_rate ) {
 			$exchange_rate = 1;
 		}
 
-		$total = round( $order->get_total() * $exchange_rate, 2 );
+		$total = number_format( $order->get_total() * $exchange_rate, 2 );
 
 		if ( $this->is_mobile() ) {
 			$pay_request_builder = new AlipayTradeWapPayContentBuilder();
@@ -712,7 +710,7 @@ This key is secret and is not recorded in Alipay Open Platform - <strong>DO NOT 
 			$index = 0;
 			foreach ( $order_items as $item_id => $item ) {
 
-				if ( $index > 0 && 0 === absint( $desc ) ) {
+				if ( $index > 0 && ! $desc ) {
 					$title .= '...';
 
 					break;
@@ -728,6 +726,13 @@ This key is secret and is not recorded in Alipay Open Platform - <strong>DO NOT 
 				$index++;
 			}
 		}
+
+		if ( $desc && 128 < mb_strlen( $title ) ) {
+			$title = mb_substr( $title, 0, 125 ) . '...';
+		} elseif ( 256 < mb_strlen( $title ) ) {
+			$title = mb_substr( $title, 0, 253 ) . '...';
+		}
+
 		return $title;
 	}
 

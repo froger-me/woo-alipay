@@ -1,4 +1,4 @@
-# Woo Alipay - Alipay payment gateway for WooCommerce
+# Payment gateway for WooCommerce - Woo Alipay
 
 * [General Description](#user-content-general-description)
 	* [Requirements](#user-content-requirements)

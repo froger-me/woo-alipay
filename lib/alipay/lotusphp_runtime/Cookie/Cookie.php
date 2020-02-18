@@ -65,7 +65,8 @@ class LtCookie
 	// 	$iv = mcrypt_create_iv($ivSize, MCRYPT_RAND);
 	// 	$encryptText = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $plainText, MCRYPT_MODE_ECB, $iv);
 	// 	return trim(base64_encode($encryptText));
-	// }
+	//
+	}
 
 	/**
 	 * Set cookie value to deleted with $name

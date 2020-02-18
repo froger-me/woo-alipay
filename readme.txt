@@ -1,4 +1,4 @@
-=== Woo Alipay ===
+=== Payment gateway for WooCommerce - Woo Alipay ===
 Contributors: frogerme
 Tags: alipay, alibaba, payments, payment gateway, 支付宝, 阿里巴巴
 Requires at least: 4.9.5
@@ -55,6 +55,12 @@ This section describes how to install the plugin and get it working.
 1. Upload the plugin files to the `/wp-content/plugins/woo-alipay` directory.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Edit plugin settings
+
+= 1.1 =
+* Add translations
+* Make sure parameters send to Alipay stay within string length requirements
+* Fix floating point arithmetic
+* WC tested up to: 3.9.1
 
 = 1.0 =
 * First version

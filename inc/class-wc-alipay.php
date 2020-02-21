@@ -170,7 +170,7 @@ class WC_Alipay extends WC_Payment_Gateway {
 		$total    = $this->maybe_convert_amount( $order->get_total() );
 		$amount   = $this->maybe_convert_amount( $amount );
 
-		if ( $amount <= 0 || $amount > $total ) {
+		if ( floatval( $amount ) <= 0 || floatval( $amount ) > floatval( $total ) ) {
 			return new WP_Error( 'error', __( 'Refund failed - incorrect refund amount (must be more than 0 and less than the total amount of the order).', 'woo-alipay' ) );
 		}
 
@@ -178,7 +178,6 @@ class WC_Alipay extends WC_Payment_Gateway {
 		$refund_result = $this->do_refund( $out_trade_no, $trade_no, $amount, self::$refund_id, $reason, $order_id );
 
 		if ( ! $refund_result instanceof WP_Error ) {
-			$amount = number_format( $refund_result->refund_fee / 100, 2, '.', '' );
 			$result = true;
 
 			$order->add_order_note(
@@ -256,13 +255,7 @@ class WC_Alipay extends WC_Payment_Gateway {
 			self::log( __METHOD__ . ' Order #' . $order_id . ': ' . wc_print_r( $result ) );
 		}
 
-		$exchange_rate = floatval( $this->get_option( 'exchange_rate' ) );
-
-		if ( 0 >= $exchange_rate || ! $exchange_rate ) {
-			$exchange_rate = 1;
-		}
-
-		$total = number_format( $order->get_total() * $exchange_rate, 2 );
+		$total = $this->maybe_convert_amount( $order->get_total() );
 
 		if ( $this->is_mobile() ) {
 			$pay_request_builder = new AlipayTradeWapPayContentBuilder();
@@ -359,7 +352,7 @@ class WC_Alipay extends WC_Payment_Gateway {
 		$order                           = wc_get_order( $order_id );
 		$config                          = $this->get_config( $order_id );
 		$response_data['fund_bill_list'] = stripslashes( $response_data['fund_bill_list'] );
-		$order_total                     = (string) $this->maybe_convert_amount( $order->get_total() );
+		$order_total                     = $this->maybe_convert_amount( $order->get_total() );
 		$total_amount_check              = ( $order_total === $response_total );
 		$response_app_id_check           = ( $response_app_id === $config['app_id'] );
 		$order_check                     = ( $order instanceof WC_Order );
@@ -760,7 +753,7 @@ This key is secret and is not recorded in Alipay Open Platform - <strong>DO NOT 
 			$amount = round( ( $amount / 100 ), 2 );
 		}
 
-		return $amount;
+		return number_format( $amount, 2, '.', '' );
 	}
 
 	protected static function log( $message, $level = 'info', $force = false ) {

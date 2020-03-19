@@ -56,6 +56,9 @@ This section describes how to install the plugin and get it working.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Edit plugin settings
 
+= 1.1.2 =
+* WC tested up to: 4.0
+
 = 1.1.1 =
 * Adjust price parameters for high values, and use the `maybe_convert_amount` method throughout
 * WC tested up to: 3.9.2

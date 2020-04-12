@@ -720,6 +720,8 @@ This key is secret and is not recorded in Alipay Open Platform - <strong>DO NOT 
 			}
 		}
 
+		$title = str_replace( '%', '', $title );
+
 		if ( $desc && 128 < mb_strlen( $title ) ) {
 			$title = mb_substr( $title, 0, 125 ) . '...';
 		} elseif ( 256 < mb_strlen( $title ) ) {

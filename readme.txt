@@ -2,7 +2,7 @@
 Contributors: frogerme
 Tags: alipay, alibaba, payments, payment gateway, 支付宝, 阿里巴巴
 Requires at least: 4.9.5
-Tested up to: 5.3.2
+Tested up to: 5.4
 Stable tag: trunk
 Requires PHP: 7.0
 License: GPLv3
@@ -55,6 +55,11 @@ This section describes how to install the plugin and get it working.
 1. Upload the plugin files to the `/wp-content/plugins/woo-alipay` directory.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Edit plugin settings
+
+= 1.1.3 =
+* Strip `%` from data sent to Alipay
+* WC tested up to: 4.0.1
+* WordPress tested up to: 5.4
 
 = 1.1.2 =
 * WC tested up to: 4.0
